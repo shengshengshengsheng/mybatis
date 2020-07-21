@@ -11,6 +11,8 @@
         <module>day01_eesy_01mybatis</module>
         <module>day01_eesy_02mybatis_annotation</module>
         <module>day01_eesy_03mybatis_dao</module>
+        <module>dayo01_eesy_04mybatis_design</module>
+        <module>day02_eesy_01mybatis_crud</module>
     </modules>
     <packaging>pom</packaging>
     <dependencies>
