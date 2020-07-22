@@ -32,4 +32,12 @@ public interface IUserDao {
      * @param userId
      */
     void deleteUser(Integer userId);
+
+    User findById(Integer id);
+
+    List<User> findByName(String userName);
+
+    Integer findTotal();
+
+    User findByQueryVo(QueryVo vo);
 }

@@ -1,6 +1,7 @@
 package com.itheima.test;
 
 import com.itheima.dao.IUserDao;
+import com.itheima.dao.QueryVo;
 import com.itheima.domain.User;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -64,7 +65,9 @@ public class MybatisTest {
     public void testSave() {
         //5.使用代理对象执行方法
         User user = new User(new Date(),"name","address","男");
+        System.out.println("保存前:"+user);
         userDao.saveUser(user);
+        System.out.println("保存后:"+user);
     }
 
     @Test
@@ -77,5 +80,31 @@ public class MybatisTest {
     @Test
     public void testDelete(){
         userDao.deleteUser(1);
+    }
+
+    @Test
+    public void testFindById(){
+        User user = userDao.findById(3);
+        System.out.println(user);
+    }
+
+    @Test
+    public void testFindByName(){
+        List<User> userList = userDao.findByName("x");
+        System.out.println(userList.size());
+    }
+
+    @Test
+    public void testFindTotal(){
+        Integer total = userDao.findTotal();
+        System.out.println(total);
+    }
+
+    @Test
+    public void testFindByQueryVo(){
+        QueryVo queryVo = new QueryVo();
+        queryVo.setUser(new User(2, new Date(), "name", "add", "男"));
+        User user = userDao.findByQueryVo(queryVo);
+        System.out.println(user);
     }
 }
