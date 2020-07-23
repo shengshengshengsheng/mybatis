@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.dao.IUserDao">
+<!--    配置数据库中的字段与实体类中的字段的一一对应关系-->
+    <resultMap id="userMap" type="com.itheima.domain.User">
+        <id property="id" column="id"/>
+        <result property="address" column="address"/>
+        <result property="username" column="username"/>
+    </resultMap>
+<!--    配置查询所有-->
+    <select id="findAll" resultType="com.itheima.domain.User">
+        select * from user;
+    </select>
+<!--    保存方法-->
+    <update id="saveUser" parameterType="com.itheima.domain.User">
+<!--        配置插入操作后获取插入的id-->
+        <selectKey keyProperty="id" keyColumn="id" resultType="int" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+        insert into user(username, birthday, sex, address) VALUES (#{username},#{birthday},#{sex},#{address})
+    </update>
+    <update id="updateUser" parameterType="com.itheima.domain.User">
+        update user set username = #{username},birthday = #{birthday}, sex = #{sex},address=#{address}
+        where id=#{id}
+    </update>
+    <delete id="deleteUser" parameterType="java.lang.Integer">
+        delete from user where id =#{userId}
+    </delete>
+    <select id="findById" resultType="com.itheima.domain.User">
+        select * from user where id = #{id}
+    </select>
+    <select id="findByName" resultType="com.itheima.domain.User">
+        select * from user where username like concat('%',#{userName},'%');
+    </select>
+    <select id="findTotal" resultType="java.lang.Integer">
+        select count(*) from user;
+    </select>
+    <select id="findByQueryVo" resultType="com.itheima.domain.User">
+        select * from user where id = #{user.id}
+    </select>
+<!--    抽取重复的sql语句-->
+    <sql id="defaultUser">
+        select * from user
+    </sql>
+    <select id="findUserByCondition" resultType="com.itheima.domain.User">
+        <include refid="defaultUser"/>
+        where 1=1
+        <if test="id != null ">
+            and id=#{id}
+        </if>
+        <if test="address != null and address != ''">
+            and address = #{address}
+        </if>
+        <if test="birthday != null">
+            and birthday = #{birthday}
+        </if>
+        <if test="sex != null and sex != ''">
+            and sex =#{sex}
+        </if>
+        <if test="username != null and username != ''">
+            and username =#{username}
+        </if>
+    </select>
+
+    <select id="findUserByQueryVo" resultType="com.itheima.domain.User">
+        select * from user
+        <where>
+            <if test="ids != null and ids.size() != 0">
+                and id in
+                <foreach collection="ids" open="(" close=")" item="id" separator=",">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+</mapper>
