@@ -6,4 +6,7 @@
     <select id="findAll" resultType="com.itheima.domain.Account">
         select * from account
     </select>
+    <select id="findAllAccount" resultType="com.itheima.domain.AccountUser">
+        
+    </select>
 </mapper>
