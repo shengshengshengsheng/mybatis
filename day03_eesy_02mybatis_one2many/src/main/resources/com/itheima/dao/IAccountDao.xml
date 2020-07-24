@@ -3,10 +3,23 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.itheima.dao.IAccountDao">
 
-    <select id="findAll" resultType="com.itheima.domain.Account">
-        select * from account
+    <select id="findAll" resultMap="accountUserMap">
+        select u.*,a.id as aid,a.uid,a.money from account a left join user u on a.uid = u.id
     </select>
     <select id="findAllAccount" resultType="com.itheima.domain.AccountUser">
-        
+        select a.*,u.username,u.address from account a left join user u on a.uid = u.id
     </select>
+
+    <resultMap id="accountUserMap" type="com.itheima.domain.Account">
+        <id property="id" column="aid"/>
+        <result property="uid" column="uid"/>
+        <result property="money" column="money"/>
+        <association property="user" column="uid" javaType="com.itheima.domain.User">
+            <id property="id" column="id" />
+            <result column="username" property="username"/>
+            <result column="address" property="address"/>
+            <result column="sex" property="sex"/>
+            <result column="birthday" property="birthday"/>
+        </association>
+    </resultMap>
 </mapper>

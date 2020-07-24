@@ -21,14 +21,14 @@ public class User implements Serializable {
 
     private String sex;
 
-    List<Account> accountList;
+    private List<Role> roleList;
 
-    public List<Account> getAccountList() {
-        return accountList;
+    public List<Role> getRoleList() {
+        return roleList;
     }
 
-    public void setAccountList(List<Account> accountList) {
-        this.accountList = accountList;
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
     }
 
     public User() {
@@ -97,7 +97,6 @@ public class User implements Serializable {
                 ", username='" + username + '\'' +
                 ", address='" + address + '\'' +
                 ", sex='" + sex + '\'' +
-                ", accountList=" + accountList +
                 '}';
     }
 }

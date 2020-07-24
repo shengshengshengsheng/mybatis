@@ -8,9 +8,23 @@
         <result property="address" column="address"/>
         <result property="username" column="username"/>
     </resultMap>
+
+    <resultMap id="userAccountMap" type="com.itheima.domain.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="address" column="address"/>
+        <result property="birthday" column="birthday"/>
+        <result property="sex" column="sex"/>
+<!--        配置user对象中accountList的集合映射-->
+        <collection property="accountList" ofType="Account">
+            <id property="id" column="aid"/>
+            <result property="money" column="money"/>
+            <result property="uid" column="uid"/>
+        </collection>
+    </resultMap>
 <!--    配置查询所有-->
-    <select id="findAll" resultType="com.itheima.domain.User">
-        select * from user;
+    <select id="findAll" resultMap="userAccountMap">
+        select u.*,a.id as aid,a.money,a.uid from user u left join account a on u.id = a.uid;
     </select>
 <!--    保存方法-->
     <update id="saveUser" parameterType="com.itheima.domain.User">

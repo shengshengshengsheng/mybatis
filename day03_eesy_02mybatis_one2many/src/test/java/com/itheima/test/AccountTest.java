@@ -4,6 +4,7 @@ import com.itheima.dao.IAccountDao;
 import com.itheima.dao.IUserDao;
 import com.itheima.dao.QueryVo;
 import com.itheima.domain.Account;
+import com.itheima.domain.AccountUser;
 import com.itheima.domain.User;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -59,6 +60,16 @@ public class AccountTest {
         //5.使用代理对象执行方法
         List<Account> accountList = accountDao.findAll();
         for (Account account : accountList) {
+            System.out.println(account);
+            System.out.println(account.getUser());
+        }
+    }
+
+    @Test
+    public void testFindAllAccount() {
+        //5.使用代理对象执行方法
+        List<AccountUser> accountList = accountDao.findAllAccount();
+        for (AccountUser account : accountList) {
             System.out.println(account);
         }
     }
